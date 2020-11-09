@@ -36,12 +36,6 @@ describe "As a visitor" do
 
     describe 'Next to each patients name I see a button to remove that patient' do
       it "When I remove patient I'm brought back to dr show page and patient is gone" do
-        doctor_2 = @hospital.doctors.create(
-          name: "Chris Turk",
-          specialty: "General Surgery",
-          university: "William & Mary University"
-        )
-        doctor_2.patients << @patient_1
         within "#patient-#{@patient_1.id}" do
           click_button "Remove Patient"
         end
@@ -65,7 +59,7 @@ describe "As a visitor" do
         end
 
         @doctor.reload
-        
+
         expect(@doctor.patients).to eq([@patient_2, @patient_3])
         expect(doctor_2.patients).to eq([@patient_1])
       end
