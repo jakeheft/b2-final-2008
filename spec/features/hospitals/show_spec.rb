@@ -20,7 +20,7 @@ describe "As a visitor" do
         university: "William & Mary University"
       )
       visit "/hospitals/#{hospital.id}"
-save_and_open_page
+
       expect(page).to have_content(hospital.name)
       expect(page).to have_content(hospital.doc_count)
       expect(page).to have_content(doctor_1.university)
