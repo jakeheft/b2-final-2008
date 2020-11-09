@@ -32,5 +32,26 @@ describe Hospital, type: :model do
 
       expect(hospital.doc_count).to eq(3)
     end
+
+    it 'unique_universities' do
+      hospital = Hospital.create!(name: "Super Good Hospital")
+      doctor_1 = hospital.doctors.create!(
+        name: "Meredith Grey",
+        specialty: "General Surgery",
+        university: "Harvard University"
+      )
+      doctor_2 = hospital.doctors.create!(
+        name: "Jack Kevorkian",
+        specialty: "Pathology",
+        university: "Harvard University"
+      )
+      doctor_3 = hospital.doctors.create!(
+        name: "Chris Turk",
+        specialty: "General Surgery",
+        university: "William & Mary University"
+      )
+
+      expect(hospital.unique_universities.sort).to eq(["Harvard University", "William & Mary University"])
+    end
   end
 end
