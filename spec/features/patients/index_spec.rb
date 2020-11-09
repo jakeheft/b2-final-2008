@@ -1,13 +1,8 @@
 require 'rails_helper'
 
-describe Patient, type: :model do
-  describe 'relationships' do
-    it { should have_many :doctor_patients }
-    it { should have_many(:doctors).through(:doctor_patients) }
-  end
-
-  describe ".class methods" do
-    it 'age_sorted' do
+describe "As a visitor" do
+  describe "When I visit a patients index page" do
+    it "I see the names of all patients listed from oldest to youngest" do
       hospital = Hospital.create(name: "Super Good Hospital")
       doctor = hospital.doctors.create!(
         name: "Meredith Grey",
@@ -27,7 +22,11 @@ describe Patient, type: :model do
         age: 23
       )
 
-      expect(Patient.age_sorted).to eq([patient_1, patient_3, patient_2])
+      visit '/patients'
+
+      expect(page.all('li')[0]).to have_content(patient_1.name)
+      expect(page.all('li')[1]).to have_content(patient_3.name)
+      expect(page.all('li')[2]).to have_content(patient_2.name)
     end
   end
 end
